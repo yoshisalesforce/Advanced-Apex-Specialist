@@ -1,6 +1,6 @@
 name: PR Check
 
-on: push: # プルリクエスト作成時に実行
+on: [push] # プルリクエスト作成時に実行
 
 jobs:
   Hello: # 1つ目のジョブ
