@@ -21,11 +21,11 @@ jobs:
       - name: Echo PR Title
         run: echo ${{ github.event.pull_request.title }}
       - name: Authenticate to Salesforce
-        echo "${{ secrets.SF_CERT_KEY }}" > server.key
+        run: echo "${{ secrets.SF_CERT_KEY }}" > server.key
           sf login jwt --username ${{ secrets.SF_USERNAME }} \
-                       --keyfile server.key \
-                       --client-id ${{ secrets.SF_CONSUMER_KEY }} \
-                       --alias aasenv \
-                       --set-default
+          --keyfile server.key \
+          --client-id ${{ secrets.SF_CONSUMER_KEY }} \
+          --alias aasenv \
+          --set-default
       - name: Run Apex Tests
         run: sf apex run test --target-org aasenv --class-names ConstantsTest --synchronous
