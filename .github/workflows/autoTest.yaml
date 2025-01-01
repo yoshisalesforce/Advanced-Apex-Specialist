@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Echo PR Title
-        run: echo ${{ github.event.pull_request.title }}
+        run: echo ${github.event.pull_request.title}
       - name: Echo PR Body
         run: echo $PWD
       - name: uses: actions/checkout@v4
