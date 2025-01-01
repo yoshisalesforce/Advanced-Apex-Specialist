@@ -13,5 +13,6 @@ jobs:
         run: echo ${github.event.pull_request.title}
       - name: Echo PR Body
         run: echo $PWD
-      - name: uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+      - name: Echo PWD
         run: echo $PWD
