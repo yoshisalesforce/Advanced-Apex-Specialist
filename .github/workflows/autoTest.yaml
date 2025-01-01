@@ -10,5 +10,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Run say hello
-        run: PR_BODY="${{ github.event.pull_request.body || 'No body provided' }}"
-        echo "PR Body: $PR_BODY"
+        run:
+          PR_BODY="${{ github.event.pull_request.body || 'No body provided' }}"
+          echo "PR Body: $PR_BODY"
