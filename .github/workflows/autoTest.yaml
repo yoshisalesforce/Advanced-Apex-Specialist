@@ -11,6 +11,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Echo PR Title
-        run: echo ${github.event.pull_request.title}
+        run: echo ${{ github.event.pull_request.title }}
       - name: Echo PR Body
         run: echo $PWD
