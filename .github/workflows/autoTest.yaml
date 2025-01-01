@@ -10,4 +10,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Run say hello
-        run: echo "I will take test ${github.event.pull_request.body}"
+        run: PR_BODY="${{ github.event.pull_request.body || 'No body provided' }}"
+        echo "PR Body: $PR_BODY"
