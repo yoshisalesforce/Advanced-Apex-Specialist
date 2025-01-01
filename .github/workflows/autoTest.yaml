@@ -12,5 +12,5 @@ jobs:
       - uses: actions/checkout@v4
       - name: Echo PR Title
         run: echo ${{ github.event.pull_request.title }}
-      - name: Echo PR Body
-        run: echo $PWD
+      - name: Run Apex Tests
+        run: sf apex run test --target-org aasenv --class-names ConstantsTest --synchronous
