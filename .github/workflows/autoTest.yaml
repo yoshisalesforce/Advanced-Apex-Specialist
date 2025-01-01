@@ -1,11 +1,14 @@
 name: PR Check
 
-on: [push] # プルリクエスト作成時に実行
+on:
+  pull_request:
+    paths:
+      - "force-app/**"
 
 jobs:
-  Hello: # 1つ目のジョブ
+  Hello:
     name: Say Hello
     runs-on: ubuntu-latest
     steps:
       - name: Run say hello
-        run: echo "Say hellooo..." # 実際には必要なスクリプトやコマンドを記述
+        run: echo "I will take test ${github.event.pull_request.body}"
