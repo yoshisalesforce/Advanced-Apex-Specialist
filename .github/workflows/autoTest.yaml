@@ -9,7 +9,9 @@ jobs:
     name: Say Hello
     runs-on: ubuntu-latest
     steps:
-      - name: Run say hello
-        run:
-          PR_BODY="${{ github.event.pull_request.body || 'No body provided' }}"
-          echo "PR Body: $PR_BODY"
+      - name: Echo PR Title
+        run: echo ${{ github.event.pull_request.title }}
+      - name: Echo PR Body
+        run: echo $PWD
+      - name: uses: actions/checkout@v4
+        run: echo $PWD
