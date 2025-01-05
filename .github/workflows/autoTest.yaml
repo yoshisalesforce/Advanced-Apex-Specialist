@@ -21,7 +21,6 @@ jobs:
       - name: Echo PR Title
         run: echo ${{ github.event.pull_request.title }}
       - name: Authenticate to Salesforce
-        run: echo "${{ secrets.SF_CERT_KEY }}" > server.key
-          sf org login web --client-id 3MVG9bZIBBVRES4FWxUUu9Kr03DKn8fvX4ED6MYzm5QEIc80r5fL6oFSFbq9StEcefQONElQvDA8U2sokPNuQ --set-default-dev-hub --alias aasenv
+        run: sf org login web --client-id 3MVG9bZIBBVRES4FWxUUu9Kr03DKn8fvX4ED6MYzm5QEIc80r5fL6oFSFbq9StEcefQONElQvDA8U2sokPNuQ --set-default-dev-hub --alias aasenv
       - name: Run Apex Tests
         run: sf apex run test --target-org aasenv --class-names ConstantsTest --synchronous
