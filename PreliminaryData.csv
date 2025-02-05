@@ -1,0 +1,13 @@
+Name	Family	Initial_Inventory__c	Quantity_Ordered__c	IsActive
+Pizza	Entree	25	0	true
+Garlic Bread	Side	20	0	true
+Chocolate Cake	Dessert	15	0	true
+Coconut Water	Beverage	10	0	true
+Hamburger	Entree	25	0	true
+French Fries	Side	20	0	true
+Carrot Cake	Dessert	15	0	true
+Lemonade	Beverage	10	0	true
+Hot Dog	Entree	25	0	true
+Onion Rings	Side	20	0	true
+Jello	Dessert	15	0	true
+Iced Tea	Beverage	10	0	true
