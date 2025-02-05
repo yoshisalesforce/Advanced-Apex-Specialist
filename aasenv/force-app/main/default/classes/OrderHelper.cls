@@ -1,5 +1,4 @@
-public with sharing class OrderHelper {
-
+public without sharing class OrderHelper {
     /**
      * @name AfterUpdate
      * @description
@@ -14,7 +13,9 @@ public with sharing class OrderHelper {
                 orderIds.add(newList[i].Id);
             }
         }
-        RollUpOrderItems(orderIds);
+        if(orderIds.size() > 0){
+            RollUpOrderItems(orderIds);
+        }
     }
 
     /**
@@ -27,27 +28,30 @@ public with sharing class OrderHelper {
         //ToDo: Declare a Map named "productMap" of Ids to Product2 records
         Map<Id, Product2> productMap = new Map<Id, Product2>();
         //ToDo: Loop through a query of OrderItems related to the activatedOrderIds
+        Set<Id> productIds = new Set<Id>();
         for (OrderItem oi : [SELECT Id, Product2Id, Quantity FROM OrderItem WHERE OrderId IN :activatedOrderIds] ){
-            //ToDo: Populate the map with the Id of the related Product2 as the key and Product2 record as the value
-            if(!productMap.containsKey(oi.Product2Id)){
-                productMap.put(oi.Product2Id, oi.Product2Id);
-                System.debug(productMap);
+            if(!productIds.contains(oi.Product2Id)){
+                productIds.add(oi.Product2Id);
             }
+        }
+        //ToDo: Populate the map with the Id of the related Product2 as the key and Product2 record as the value
+        for (Product2 prod : [SELECT Id FROM Product2 WHERE Id IN :productIds] ){
+            productMap.put(prod.Id, prod);
         }
         //ToDo: Loop through a query that aggregates the OrderItems related to the Products in the ProductMap keyset
-        for (AggregateResult ag : [SELECT Product2Id, SUM(Quantity) totalQuantity FROM OrderItem WHERE Product2Id IN :productMap.keySet() GROUP BY Product2Id] ){
+        List<AggregateResult> ars = [SELECT Product2Id, SUM(Quantity) totalQuantity FROM OrderItem WHERE Product2Id IN :productMap.keySet() GROUP BY Product2Id];
         //ToDo: Perform an update on the records in the productMap
-            Id product2Id = (Id)ag.get('Product2Id');
-            Product2 prod = productMap.get(product2Id);
-            prod.Quantity_Ordered__c = (Decimal)ag.get('expr0');
-            productMap.put(product2Id, prod);
+        List<Product2> productsToUpdate = new List<Product2>();
+        for (AggregateResult ar : ars){
+            Product2 prod = productMap.get((Id)ar.get('Product2Id'));
+            prod.Quantity_Ordered__c = (Decimal)ar.get('totalQuantity');
+            productsToUpdate.add(prod);
         }
         try {
-            if(productMap.values().size() != null && productMap.values().size() > 0){
-                update productMap.values();
-            }
-        }catch(Exception e){
-            System.debug(Constants.ERROR_MESSAGE + ' ' + e.getMessage());
+            update productsToUpdate;
+            System.debug('Products updated: ' + productsToUpdate);
+        } catch(DmlException e) {
+            System.debug('The following exception has occurred: ' + e.getMessage());
         }
     }
 
