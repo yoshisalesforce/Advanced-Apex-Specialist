@@ -9,7 +9,7 @@
     - [Initial Setup](#initial-setup)
     - [Use Constants to Store Data](#use-constants-to-store-data)
     - [Use custom metadata types](#use-custom-metadata-types)
-  - [Correctly Calculate Inventory Quantities](#correctly-calculate-inventory-quantities)
+    - [Correctly Calculate Inventory Quantities](#correctly-calculate-inventory-quantities)
 ## Env info
 Confirm .env file
 ## Business Requirement
@@ -44,7 +44,7 @@ Confirm .env file
   |Dessert|15|
   |Beverage|5|
 
-## Correctly Calculate Inventory Quantities
+### Correctly Calculate Inventory Quantities
 To solve following issues
 1. The value of the Quantity Ordered field isn’t accurate
 1. Saving a new order is often impossible because of system errors
