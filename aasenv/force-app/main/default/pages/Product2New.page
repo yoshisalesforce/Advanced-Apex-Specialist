@@ -2,7 +2,7 @@
     <apex:sectionHeader title="New Product" subtitle="Add Inventory" />
     <apex:pageMessages id="pageMessages" />
     <apex:form id="form">
-        <apex:actionRegion>
+        <apex:actionRegion >
             <apex:pageBlock title="Existing Inventory" id="existingInv">
                 <apex:pageBlockButtons location="top">
                     <apex:commandButton action="{!addInventory}" value="addInventory" rerender="existingInv, errorMsg" />
