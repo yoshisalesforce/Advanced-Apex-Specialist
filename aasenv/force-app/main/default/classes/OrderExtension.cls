@@ -20,6 +20,7 @@ public class OrderExtension {
             orderRecord = queryOrderRecord(orderRecord.Id);
         }
         if (orderRecord.OrderItems.size()>0){
+            this.orderItemList = new List<OrderItem>(orderRecord.OrderItems);
             for (OrderItem oi : orderRecord.OrderItems){
                 orderItemMap.put(oi.Product2Id,oi);
                 ChartHelper.ChartData data = new ChartHelper.ChartData(oi.Product2.Name, oi.Quantity * oi.UnitPrice);
