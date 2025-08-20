@@ -19,6 +19,16 @@ public class OrderExtension {
         if ( orderRecord.Id != null ){
             orderRecord = queryOrderRecord(orderRecord.Id);
         }
+        if (orderRecord.OrderItems.size()>0){
+            for (OrderItem oi : orderRecord.OrderItems){
+                orderItemMap.put(oi.Product2Id,oi);
+                ChartHelper.ChartData data = new ChartHelper.ChartData(oi.Product2.Name, oi.Quantity * oi.UnitPrice);
+                if(this.pieData == null){
+                    this.pieData = new List<ChartHelper.ChartData>();
+                }
+                this.pieData.add(data);
+            }
+        }
     }
 
     //ToDo: Implement your own method to populate orderItemList
