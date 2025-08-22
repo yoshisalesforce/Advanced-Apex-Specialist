@@ -8,13 +8,11 @@ public without sharing class OrderHelper {
     **/
     public static void AfterUpdate(List<Order> newList, List<Order> oldList){
         Set<Id> orderIds = new Set<Id>();
-        system.debug('newList.size(): ' + newList.size());
         for (Integer i = 0; i < newList.size(); i++){
             if (newList[i].Status == Constants.ACTIVATED_ORDER_STATUS && oldList[i].Status == Constants.DRAFT_ORDER_STATUS){
                 orderIds.add(newList[i].Id);
             }
         }
-        system.debug('orderIds.size(): ' + orderIds.size());
         if(orderIds.size() > 0){
             RollUpOrderItems(orderIds);
         }
@@ -41,7 +39,7 @@ public without sharing class OrderHelper {
             productMap.put(prod.Id, prod);
         }
         //ToDo: Loop through a query that aggregates the OrderItems related to the Products in the ProductMap keyset
-        List<AggregateResult> ars = [SELECT Product2Id, SUM(Quantity) totalQuantity FROM OrderItem WHERE Product2Id IN :productMap.keySet() GROUP BY Product2Id];
+        List<AggregateResult> ars = [SELECT Product2Id, Order.Status, SUM(Quantity) totalQuantity FROM OrderItem WHERE Product2Id IN :productMap.keySet() AND Order.Status = :Constants.ACTIVATED_ORDER_STATUS GROUP BY Product2Id, Order.Status];
         //ToDo: Perform an update on the records in the productMap
         List<Product2> productsToUpdate = new List<Product2>();
         for (AggregateResult ar : ars){
