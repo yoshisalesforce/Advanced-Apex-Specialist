@@ -35,9 +35,7 @@ public without sharing class TestDataFactory {
         for(Integer i = 0; i < cnt; i++){
             Integer j = Math.mod(i, Constants.PRODUCT_FAMILY.size());
             Product2 prod = new Product2(Name = 'Test' + i, IsActive = true, Initial_Inventory__c = 10, Family = Constants.PRODUCT_FAMILY[j].getValue());
-            system.debug(prod);
             prods.add(prod);
-            system.debug(prods);
         }
         return prods;
     }
@@ -139,24 +137,20 @@ public without sharing class TestDataFactory {
         insert ch;
         List<Product2> prods = ConstructProducts(cnt);
         insert prods;
-        System.debug(prods);
         List<PricebookEntry> pe = ConstructPricebookEntries(prods);
         insert pe;
-        System.debug(pe);
         List<Account> ac = ConstructAccounts(cnt);
         insert ac;
         List<Contact> co = ConstructContacts(cnt, ac);
         insert co;
-        System.debug(co);
         List<Order> ord = ConstructOrders(cnt, ac);
         insert ord;
-        System.debug(ord);
         List<OrderItem> ordi = ConstructOrderItems(cnt, pe, ord);
         insert ordi;
     }
     public static void VerifyQuantityOrdered(Product2 originalProduct, Product2 updatedProduct, Integer qtyOrdered){
         Decimal newQuantity = qtyOrdered + originalProduct.Quantity_Ordered__c;
-        System.Assert.areEqual(updatedProduct.Quantity_Ordered__c ,newQuantity);
+        Assert.areEqual(newQuantity, updatedProduct.Quantity_Ordered__c, 'Quantity_Ordered__c should match expected value');
     }
 
 }

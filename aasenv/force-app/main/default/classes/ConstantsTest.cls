@@ -1,5 +1,5 @@
 @isTest
-public with sharing class ConstantsTest {
+public class ConstantsTest {
     @isTest
     public static void ConstantsTest() {
         System.assertEquals(5, Constants.DEFAULT_ROWS);
